@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>本地 - jQuery UI 滑块（Slider） - 对齐增量</title>
+    <link rel="stylesheet" href="http://apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+    <script src="http://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="jqueryui/style.css">
+    <script>
+    $(function() {
+        $( "#slider" ).slider({
+            value:0,
+            min: 0,
+            max: 100,
+            step: 2,
+            slide: function( event, ui ) {
+                $( "#amount" ).val( "$" + ui.value );
+            }
+        });
+        $( "#amount" ).val( " " + $( "#slider" ).slider( "value" ) );
+    });
+    </script>
+</head>
+<body>
+
+<p>
+    <label for="amount">测试滑块数值（2 增量）：</label>
+    <input type="text" id="amount" style="border:0; color:#0e0acf; font-weight:bold;">
+</p>
+
+<div id="slider" style="width:250px;"></div>
+
+
+</body>
+</html>
