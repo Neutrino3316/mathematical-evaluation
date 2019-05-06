@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="http://apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
     <script src="http://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="http://apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.1/xlsx.full.min.js"></script>
+    <!-- https://www.jianshu.com/p/059a203e094d -->
     <link rel="stylesheet" href="jqueryui/style.css">
     <script>
     $(function() {
@@ -15,7 +17,7 @@
             max: 100,
             step: 2,
             slide: function( event, ui ) {
-                $( "#amount" ).val( "$" + ui.value );
+                $( "#amount" ).val(ui.value );
             }
         });
         $( "#amount" ).val( " " + $( "#slider" ).slider( "value" ) );
@@ -26,7 +28,28 @@
 
 <p>
     <label for="amount">测试滑块数值（2 增量）：</label>
-    <input type="text" id="amount" style="border:0; color:#0e0acf; font-weight:bold;">
+    <input type="text" id="amount" style="border:0; font-weight:bold; color:#0e0acf;">
+
+    <script>
+    var data = [
+        {"name":"John", "city": amount.value},
+        {"name":"Mike", "city": "Los Angeles"},
+        {"name":"Zach", "city": "New York"}
+    ];
+
+    /* 如果没有导入xlsx组件则导入 */
+    if(typeof XLSX == 'undefined') XLSX = require('xlsx');
+
+    /* 创建worksheet */
+    var ws = XLSX.utils.json_to_sheet(data);
+
+    /* 新建空workbook，然后加入worksheet */
+    var wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "People");
+
+    /* 生成xlsx文件 */
+    XLSX.writeFile(wb, "sheetjs.xlsx");
+    </script>
 </p>
 
 <div id="slider" style="width:250px;"></div>
