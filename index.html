@@ -26,27 +26,30 @@
     </script>
 
     <script>
+        'use strict';
+        var global_data = [];
         function exportToExcel(){
-            var data = [
-                {"name":"John", "city": amount.value},
-                {"name":"Mike", "city": "Los Angeles"},
-                {"name":"Zach", "city": "New York"}
-            ];
-
             /* 如果没有导入xlsx组件则导入 */
             if(typeof XLSX == 'undefined') XLSX = require('xlsx');
-
             /* 创建worksheet */
-            var ws = XLSX.utils.json_to_sheet(data);
-
+            var ws = XLSX.utils.json_to_sheet(global_data);
             /* 新建空workbook，然后加入worksheet */
             var wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, "People");
-
             /* 生成xlsx文件 */
             XLSX.writeFile(wb, "sheetjs.xlsx");
         }
-        </script>
+    </script>
+
+    <script>
+         function nextTrail(){
+            var trail_data = {"trail":global_data.length, "value": amount.value};
+            amount.value = 0;
+            $("#slider")[0].children[0].style = "0%"
+            global_data.push(trail_data);
+            return trail_data;
+        }
+    </script>
 </head>
 <body>
 
@@ -54,7 +57,7 @@
     <label for="amount">测试滑块数值（2 增量）：</label>
     <input type="text" id="amount" style="border:0; font-weight:bold; color:#0e0acf;">
     <button type="button" class="btn btn-info" onclick="exportToExcel()">点这里下载</button>
-
+    <button type="button" class="btn btn-info" onclick="nextTrail()">点这里下一个Trail</button>
 </p>
 
 <div id="slider" style="width:250px;"></div>
