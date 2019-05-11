@@ -43,26 +43,45 @@
     </script>
 
     <script>
-         function nextTrail(){
-            var trail_data = {"trail":global_data.length, "value": amount.value};
+        function nextTrail(){
+            var trail_data = {"trail":global_data.length, "target": $('#target')[0].innerHTML, "result": amount.value};
             amount.value = 0;
-            $("#slider")[0].children[0].style = "0%"
+            $("#slider")[0].children[0].style = "0%" // reset slider to initial place
             global_data.push(trail_data);
-            return trail_data;
+            setRandomTarget();
+            // return trail_data;
+        }
+    </script>
+
+    <script>
+        function setRandomTarget(){
+            var min = 0;
+            var max = 100;
+            var random =  Math.floor(Math.random() * (max - min)) + min;
+            console.log(random);
+            $('#target')[0].innerHTML = random;
         }
     </script>
 </head>
+
 <body>
 
 <p>
     <label for="amount">测试滑块数值（2 增量）：</label>
+    <p style="line-height: 50px;font-size: 24px">请将滑块移到</p>
+    <p id="target" style="line-height: 50px;font-size: 24px">0</p>
     <input type="text" id="amount" style="border:0; font-weight:bold; color:#0e0acf;">
-    <button type="button" class="btn btn-info" onclick="exportToExcel()">点这里下载</button>
-    <button type="button" class="btn btn-info" onclick="nextTrail()">点这里下一个Trail</button>
+    <button type="button" class="btn btn-info" onclick="exportToExcel()">下载</button>
+    <button type="button" class="btn btn-info" onclick="nextTrail()">下一个Trail</button>
+    <button type="button" class="btn btn-info" onclick="setRandomTarget()">Random Target</button>
 </p>
 
 <div id="slider" style="width:250px;"></div>
 
-
 </body>
+
 </html>
+
+<script>
+    setRandomTarget();
+</script>
