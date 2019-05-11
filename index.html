@@ -3,16 +3,17 @@
 <head>
     <meta charset="utf-8">
     <title>本地 - jQuery UI 滑块（Slider） - 对齐增量</title>
-    <link rel="stylesheet" href="http://apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
-    <script src="http://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="http://apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.1/xlsx.full.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/jqueryui/1.12.1/jquery-ui.min.css">
+    <script src="https://cdn.staticfile.org/xlsx/0.14.3/xlsx.full.min.js"></script>
     <!-- https://www.jianshu.com/p/059a203e094d -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- 七牛云CDN http://www.staticfile.org/ -->
     <script>
     $(function() {
-        $( "#slider" ).slider({
+        $("#slider").slider({
             value:0,
             min: 0,
             max: 100,
@@ -21,7 +22,7 @@
                 $( "#amount" ).val(ui.value );
             }
         });
-        $( "#amount" ).val( " " + $( "#slider" ).slider( "value" ) );
+        $("#amount").val(" " + $("#slider").slider("value") );
     });
     </script>
 
