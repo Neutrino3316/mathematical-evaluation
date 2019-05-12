@@ -30,6 +30,7 @@
         'use strict';
         var global_data = [];
         function exportToExcel(){
+            nextTrail();
             /* 如果没有导入xlsx组件则导入 */
             if(typeof XLSX == 'undefined') XLSX = require('xlsx');
             /* 创建worksheet */
@@ -66,17 +67,24 @@
 
 <body>
 
-<p>
-    <label for="amount">测试滑块数值（2 增量）：</label>
-    <p style="line-height: 50px;font-size: 24px">请将滑块移到</p>
-    <p id="target" style="line-height: 50px;font-size: 24px">0</p>
+<div align="center">
+    <p style="font-size: 50px">滑块任务</p>
+    <p style="line-height: 50px;font-size: 24px">在安静地方专心完成任务</p>
+    <p style="line-height: 50px;font-size: 24px">任务耗时约3分钟</p>
+    <div style="height: 70px">
+
+    </div>
+    <p style="line-height: 50px;font-size: 24px">请将滑块移到<span id="target" style="color: red">不要按键</span></p>
     <input type="text" id="amount" style="border:0; font-weight:bold; color:#0e0acf;">
-    <button type="button" class="btn btn-info" onclick="exportToExcel()">下载</button>
+
+    <div id="slider" style="width:250px;"></div>
+
+    <div style="height: 400px"> </div>
+    <!-- https://www.runoob.com/bootstrap/bootstrap-v2-buttons.html -->
+    <button type="button" class="btn btn-success" onclick="exportToExcel()">下载</button>
     <button type="button" class="btn btn-info" onclick="nextTrail()">下一个Trail</button>
     <button type="button" class="btn btn-info" onclick="setRandomTarget()">Random Target</button>
-</p>
-
-<div id="slider" style="width:250px;"></div>
+</div>
 
 </body>
 
@@ -84,4 +92,12 @@
 
 <script>
     setRandomTarget();
+    $("button[onclick='setRandomTarget()']")[0].hidden = true
 </script>
+
+<style type="text/css">
+    .ui-slider-horizontal .ui-state-default {
+        background-color:#b0c4de;
+        background-image:url('https://pic4.zhimg.com/80/v2-a651868e7e5da51ebb065d39475f8863_qhd.jpg');
+        }
+</style>
