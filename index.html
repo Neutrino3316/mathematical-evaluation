@@ -47,6 +47,7 @@
     <script>
         function nextTrail(){
             var trail_data = {"trail":global_data.length, "target": $('#target')[0].innerHTML, "result": amount.value};
+            console.log("record data:" + JSON.stringify(trail_data));
             amount.value = 0;
             $("#slider")[0].children[0].style = "0%" // reset slider to initial place
             global_data.push(trail_data);
@@ -60,7 +61,7 @@
             var min = 0;
             var max = 100;
             var random =  Math.floor(Math.random() * (max - min)) + min;
-            console.log(random);
+            console.log("set random target:" + random);
             $('#target')[0].innerHTML = random;
         }
     </script>
