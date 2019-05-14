@@ -20,6 +20,7 @@
             step: 1,
             slide: function( event, ui ) {
                 $( "#amount" ).val(ui.value );
+                $('.ui-slider-handle')[0].innerHTML=ui.value;
             }
         });
         $("#amount").val(" " + $("#slider").slider("value") );
