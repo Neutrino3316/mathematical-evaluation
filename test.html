@@ -12,15 +12,39 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
     <!-- 七牛云CDN http://www.staticfile.org/ -->
     <script>
+        $(function() {
+            $("#picture-slider").slider({
+                value:0,
+                min: 0,
+                max: 100,
+                step: 1,
+                slide: function( event, ui ) {
+                    $( "#amount" ).val(ui.value );
+                    $('.ui-slider-handle')[0].innerHTML = 19 + "<img src='https://pic4.zhimg.com/80/v2-a651868e7e5da51ebb065d39475f8863_qhd.jpg'>";
+                    // $('.ui-slider-handle')[0].innerText = 33;
+                    $('.ui-slider-handle')[0].style = "left:" + ui.value + "%";
+                    $('.ui-slider-handle')[1].style = "left:" + ui.value + "%";
+                    // $('.ui-slider-handle')[0].innerText = "33";
+                    // $('.ui-slider-handle')[0].innerHTML = '<div style="left: 6%;"><img src="https://pic4.zhimg.com/80/v2-a651868e7e5da51ebb065d39475f8863_qhd.jpg"></div>' + 33;
+                    // $('.ui-slider')[0].innerHTML = '<div class="ui-slider-handle ui-corner-all ui-state-default" style="left: ' + ui.value + '%;"></div>';
+                    // $('.ui-slider')[1].innerHTML = '<div class="ui-slider-handle ui-corner-all ui-state-default" style="left: ' + ui.value + '%;"></div>';
+                    // $('.ui-slider')[0].innerHTML = '<span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: ' + ui.value + '%;"></span>';
+                    console.log(ui.value);
+                }
+            });
+            $("#amount").val(" " + $("#slider").slider("value") );
+        });
+    </script>
+    <script>
     $(function() {
-        $("#number-slider, #picture-slider").slider({
+        $("#number-slider").slider({
             value:0,
-            min: 1,
-            max: 99,
+            min: 0,
+            max: 100,
             step: 1,
             slide: function( event, ui ) {
                 $( "#amount" ).val(ui.value );
-                $('.ui-slider-handle')[0].innerHTML = 19 + "<img src='https://pic4.zhimg.com/80/v2-a651868e7e5da51ebb065d39475f8863_qhd.jpg'>";
+                $('.ui-slider-handle')[0].innerHTML = 19 + "<img id='frog' src='https://pic4.zhimg.com/80/v2-a651868e7e5da51ebb065d39475f8863_qhd.jpg'>";
                 // $('.ui-slider-handle')[0].innerText = 33;
                 $('.ui-slider-handle')[0].style = "left:" + ui.value + "%";
                 $('.ui-slider-handle')[1].style = "left:" + ui.value + "%";
@@ -112,9 +136,18 @@
     setRandomTarget();
     $("button[onclick='setRandomTarget()']")[0].hidden = true;
     $( "#amount" )[0].hidden = true;
+    var a = $("#picture-slider")[0];
+    var slider_img = document.getElementsByTagName('img')[0]
 </script>
 
 <style type="text/css">
+    #picture-slider{
+        transform: translate(-82.5px, 0px); /*使得元素右移x再下移y*/
+    }
+    #frog{
+        transform: translate(-82.5px, 0px); /*使得元素右移x再下移y*/
+    }
+    
     /* .ui-slider {
         background-color:#b0c4de;
         background-image:url('https://pic4.zhimg.com/80/v2-a651868e7e5da51ebb065d39475f8863_qhd.jpg');
