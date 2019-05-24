@@ -20,7 +20,7 @@
             step: 1,
             slide: function( event, ui ) {
                 $( "#amount" ).val(ui.value );
-                $('.ui-slider-handle')[0].innerHTML = ui.value + "<img src='https://pic4.zhimg.com/80/v2-a651868e7e5da51ebb065d39475f8863_qhd.jpg'>";
+                $('.ui-slider-handle')[0].innerHTML = ui.value + "<img id='frog' src='https://pic4.zhimg.com/80/v2-a651868e7e5da51ebb065d39475f8863_qhd.jpg'>";
             }
         });
         $("#amount").val(" " + $("#slider").slider("value") );
@@ -106,5 +106,8 @@
     .ui-slider-horizontal .ui-state-default {
         background-color:#b0c4de;
         background-image:url('https://pic4.zhimg.com/80/v2-a651868e7e5da51ebb065d39475f8863_qhd.jpg');
-        }
+        } */
+    #frog{
+        transform: translate(-82.5px, -195px); /*使得元素右移x再下移y*/
+    }
 </style>
