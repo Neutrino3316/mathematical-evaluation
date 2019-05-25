@@ -62,6 +62,7 @@
         var text_translate_y = 0;
         var img_translate_x = 0;
         var img_translate_y = 0;
+        var handle_text_font_size = 48;
         var handle_innerHTML = "";
         var img_path = "https://pic4.zhimg.com/80/v2-a651868e7e5da51ebb065d39475f8863_qhd.jpg";
         function setRandomTarget(){
@@ -73,7 +74,7 @@
             console.log("set random target:" + random);
         }
         function updateHandle(){
-            handle_innerHTML = "<img id='frog' src='" + img_path + "' style='color: red; transform: translate(" + img_translate_x + "px, " + img_translate_y + "px);'> <div id='target' style='color: red; transform: translate(" + text_translate_x + "px, " + text_translate_y + "px);'>" + random + "</div>";
+            handle_innerHTML = "<img id='frog' src='" + img_path + "' style='color: red; transform: translate(" + img_translate_x + "px, " + img_translate_y + "px);'> <div id='target' style='color: red; font-size: " + handle_text_font_size + "px; transform: translate(" + text_translate_x + "px, " + text_translate_y + "px);'>" + random + "</div>";
             // console.log("updateHandle called, now the img_translate_x:" + img_translate_x);
             $('.ui-slider-handle')[0].innerHTML = handle_innerHTML;
         }
@@ -81,8 +82,8 @@
             var img = $("#frog")[0];
             img_translate_x = -img.clientWidth / 2;
             img_translate_y = -img.clientHeight;
-            text_translate_x = 0 - 24;
-            text_translate_y = -img.clientHeight * 2 - 24;
+            text_translate_x = -handle_text_font_size / 2;
+            text_translate_y = -img.clientHeight * 2 - handle_text_font_size - 10;
             // console.log("readImgSize called, now the img_translate_x:" + img_translate_x);
             updateHandle();
         }
