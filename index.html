@@ -18,9 +18,9 @@
             min: 0,
             max: 100,
             step: 1,
-                $('.ui-slider-handle')[0].innerHTML = "<img id='frog' src='https://pic4.zhimg.com/80/v2-a651868e7e5da51ebb065d39475f8863_qhd.jpg'>";
             slide: function(event, ui){
                 $("#amount").val(ui.value);
+                $('.ui-slider-handle')[0].innerHTML = "<img id='frog' src='https://pic4.zhimg.com/80/v2-a651868e7e5da51ebb065d39475f8863_qhd.jpg'>";
             }
         });
         $("#amount").val(" " + $("#slider").slider("value") );
