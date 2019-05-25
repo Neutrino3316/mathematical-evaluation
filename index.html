@@ -20,7 +20,7 @@
             step: 1,
             slide: function(event, ui){
                 $("#amount").val(ui.value);
-                $('.ui-slider-handle')[0].innerHTML = "<img id='frog' src='https://pic4.zhimg.com/80/v2-a651868e7e5da51ebb065d39475f8863_qhd.jpg'> <div id='target' style='color: red; transform: translate(0px, 0px);'>" + random + "</div>";
+                $('.ui-slider-handle')[0].innerHTML = handle_innerHTML;
             }
         });
         $("#amount").val(" " + $("#slider").slider("value") );
@@ -58,11 +58,13 @@
 
     <script>
         var random = 0;
+        var handle_innerHTML = "";
         function setRandomTarget(){
             var min = 1;
             var max = 99;
             random =  Math.floor(Math.random() * (max - min)) + min;
-            $('.ui-slider-handle')[0].innerHTML = "<img id='frog' src='https://pic4.zhimg.com/80/v2-a651868e7e5da51ebb065d39475f8863_qhd.jpg'> <div id='target' style='color: red; transform: translate(0px, 0px);'>目标位置</div>";
+            handle_innerHTML = "<img id='frog' src='https://pic4.zhimg.com/80/v2-a651868e7e5da51ebb065d39475f8863_qhd.jpg'> <div id='target' style='color: red; transform: translate(" + text_translate_x + "px, 0px);'>" + random + "</div>";
+            $('.ui-slider-handle')[0].innerHTML = handle_innerHTML;
             $('#target')[0].innerHTML = random;
             console.log("set random target:" + random);
         }
@@ -103,9 +105,8 @@
 <script>
     $("button[onclick='setRandomTarget()']")[0].hidden = true;
     $( "#amount" )[0].hidden = true;
-    setTimeout("$('.ui-slider-handle')[0].innerHTML = \"<img id='frog' src='https://pic4.zhimg.com/80/v2-a651868e7e5da51ebb065d39475f8863_qhd.jpg'> <div id='target' style='color: red; transform: translate(0px, 0px);'>目标位置</div>\";", 1000);
+    setTimeout("$('.ui-slider-handle')[0].innerHTML = " + handle_innerHTML + ";", 1000);
     setTimeout("setRandomTarget();", 1000);
-    
 </script>
 
 <style type="text/css">
