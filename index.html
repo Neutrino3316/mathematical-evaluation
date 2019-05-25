@@ -18,9 +18,9 @@
             min: 0,
             max: 100,
             step: 1,
-            slide: function( event, ui ) {
-                $( "#amount" ).val(ui.value );
-                $('.ui-slider-handle')[0].innerHTML = "<img id='frog' src='https://pic4.zhimg.com/80/v2-a651868e7e5da51ebb065d39475f8863_qhd.jpg'>";
+            slide: function(event, ui){
+                $("#amount").val(ui.value);
+                updateHandle();
             }
         });
         $("#amount").val(" " + $("#slider").slider("value") );
@@ -57,12 +57,35 @@
     </script>
 
     <script>
+        var random = 0;
+        var text_translate_x = 0;
+        var text_translate_y = 0;
+        var img_translate_x = 0;
+        var img_translate_y = 0;
+        var handle_text_font_size = 48;
+        var handle_innerHTML = "";
+        var img_path = "https://y.zdmimg.com/201712/29/5a45e013212178889.jpg_d200.jpg";
         function setRandomTarget(){
             var min = 1;
             var max = 99;
-            var random =  Math.floor(Math.random() * (max - min)) + min;
-            console.log("set random target:" + random);
+            random =  Math.floor(Math.random() * (max - min)) + min;
+            updateHandle();
             $('#target')[0].innerHTML = random;
+            console.log("set random target:" + random);
+        }
+        function updateHandle(){
+            handle_innerHTML = "<img id='frog' src='" + img_path + "' style='color: red; transform: translate(" + img_translate_x + "px, " + img_translate_y + "px);'> <div id='target' style='color: red; font-size: " + handle_text_font_size + "px; transform: translate(" + text_translate_x + "px, " + text_translate_y + "px);'>" + random + "</div>";
+            // console.log("updateHandle called, now the img_translate_x:" + img_translate_x);
+            $('.ui-slider-handle')[0].innerHTML = handle_innerHTML;
+        }
+        function readImgSize(){
+            var img = $("#frog")[0];
+            img_translate_x = -img.clientWidth / 2;
+            img_translate_y = -img.clientHeight;
+            text_translate_x = -handle_text_font_size / 2;
+            text_translate_y = -img.clientHeight * 2 - handle_text_font_size - 10;
+            // console.log("readImgSize called, now the img_translate_x:" + img_translate_x);
+            updateHandle();
         }
     </script>
 </head>
@@ -75,8 +98,9 @@
     <p style="line-height: 50px;font-size: 24px">任务耗时约3分钟</p>
     <div style="height: 20px">
     </div>
-    <p style="line-height: 50px;font-size: 48px">请将滑块移到<span id="target" style="color: red">不要按键</span></p>
-    <input type="text" id="amount" style="border:0; font-weight:bold; color:#0e0acf;">
+    <p style="line-height: 50px;font-size: 48px">请将滑块移到</p>
+    <!-- <div id="target" style="color: red; transform: translate(0px, 0px);">目标位置</div> -->
+    <span id="amount" style="border: 0px; font-weight: bold; color: rgb(14, 10, 207); transform: translate(-82.5px, -175px);">被隐藏的当前数值</span>
 
     <div style="height: 200px">
     </div>
@@ -98,19 +122,18 @@
 </html>
 
 <script>
-    setRandomTarget();
     $("button[onclick='setRandomTarget()']")[0].hidden = true;
-    $( "#amount" )[0].hidden = true;
-    setTimeout("$('.ui-slider-handle')[0].innerHTML = \"<img id='frog' src='https://pic4.zhimg.com/80/v2-a651868e7e5da51ebb065d39475f8863_qhd.jpg'>\";", 30);
+    $("#amount")[0].hidden = true;
+    setTimeout("setRandomTarget();", 300);
+    setTimeout("readImgSize();", 350);
 </script>
 
 <style type="text/css">
-    /* .ui-slider-horizontal .ui-state-default {
-        background-color:#b0c4de;
-        background-image:url('https://pic4.zhimg.com/80/v2-a651868e7e5da51ebb065d39475f8863_qhd.jpg');
-        } */
-    #frog{
-        transform: translate(-82.5px, -175px); /*使得元素右移x再下移y*/
+    .ui-slider .ui-slider-handle {
+        height: 30px;
+        width: 2px;
+        margin-left: 0px;
+        border: 1px solid rgba(0,0,0,.9);
     }
     *:focus {
         outline: none;
