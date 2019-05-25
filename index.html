@@ -18,9 +18,9 @@
             min: 0,
             max: 100,
             step: 1,
-            slide: function( event, ui ) {
-                $( "#amount" ).val(ui.value );
                 $('.ui-slider-handle')[0].innerHTML = "<img id='frog' src='https://pic4.zhimg.com/80/v2-a651868e7e5da51ebb065d39475f8863_qhd.jpg'>";
+            slide: function(event, ui){
+                $("#amount").val(ui.value);
             }
         });
         $("#amount").val(" " + $("#slider").slider("value") );
@@ -76,7 +76,7 @@
     <div style="height: 20px">
     </div>
     <p style="line-height: 50px;font-size: 48px">请将滑块移到<span id="target" style="color: red">不要按键</span></p>
-    <input type="text" id="amount" style="border:0; font-weight:bold; color:#0e0acf;">
+    <span id="amount" style="border:0; font-weight:bold; color:#0e0acf;">不要按键</span></p>
 
     <div style="height: 200px">
     </div>
