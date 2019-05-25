@@ -74,7 +74,7 @@
         }
         function updateHandle(){
             handle_innerHTML = "<img id='frog' src='" + img_path + "' style='color: red; transform: translate(" + img_translate_x + "px, " + img_translate_y + "px);'> <div id='target' style='color: red; transform: translate(" + text_translate_x + "px, " + text_translate_y + "px);'>" + random + "</div>";
-            console.log("updateHandle called, now the img_translate_x:" + img_translate_x);
+            // console.log("updateHandle called, now the img_translate_x:" + img_translate_x);
             $('.ui-slider-handle')[0].innerHTML = handle_innerHTML;
         }
         function readImgSize(){
@@ -83,7 +83,7 @@
             img_translate_y = -img.clientHeight;
             text_translate_x = 0 - 24;
             text_translate_y = -img.clientHeight * 2 - 24;
-            console.log("readImgSize called, now the img_translate_x:" + img_translate_x);
+            // console.log("readImgSize called, now the img_translate_x:" + img_translate_x);
             updateHandle();
         }
     </script>
