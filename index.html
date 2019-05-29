@@ -141,7 +141,7 @@
 <script>
     $("button[onclick='setRandomTarget()']")[0].hidden = true;
     $("#response")[0].hidden = true;
-    var expected_loading_time = 2000;
+    var expected_loading_time = 50;
     setTimeout("setRandomTarget();", expected_loading_time);
     setTimeout("readImgSize();", expected_loading_time + 50);
     setTimeout("var last_confirm_time = Date.now();", expected_loading_time + 100);
