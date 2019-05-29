@@ -47,7 +47,7 @@
 
     <script>
         function nextTrail(){
-            var trail_data = {"trail":global_data.length, "target": target_value, "result": amount.value};
+            var trail_data = {"trail":global_data.length, "target_value": target_value, "result": amount.value};
             console.log("record data:" + JSON.stringify(trail_data));
             amount.value = 0;
             $("#slider")[0].children[0].style = "0%" // reset slider to initial place
@@ -58,6 +58,9 @@
     </script>
 
     <script>
+        var target_image_list = ['frac_1_2.PNG', 'frac_1_4.PNG', 'frac_1_7.PNG', 'frac_1_19.PNG', 'frac_2_3.PNG', 'frac_3_8.PNG', 'frac_4_7.PNG', 'frac_5_6.PNG', 'frac_7_9.PNG', 'frac_12_13.PNG'];
+        var target_id = 0;
+        var img_path = "test_img.png";
         var target_value = 0;
         var text_translate_x = 0;
         var text_translate_y = 0;
@@ -65,17 +68,20 @@
         var img_translate_y = 0;
         var handle_text_font_size = 48;
         var handle_innerHTML = "";
-        var img_path = "test_img.png";
         function setRandomTarget(){
-            var min = 1;
-            var max = 99;
-            target_value =  Math.floor(Math.random() * (max - min)) + min;
+            var min = 0;
+            var max = 9;
+            target_id =  Math.floor(Math.random() * (max - min)) + min;
+            img_path = "images/" + target_image_list[target_id];
+            target_value = targetImgPathToValue(img_path);
             updateHandle();
-            $('#target_text')[0].innerHTML = target_value;
-            console.log("set random target:" + target_value);
+            $('#target_text')[0].innerHTML = target_id;
+            console.log("set random target id:" + target_id);
+            console.log("set random target img_path:" + img_path);
         }
         function updateHandle(){
-            handle_innerHTML = "<img id='target_image' src='" + img_path + "' width='150' style='transform: translate(" + img_translate_x + "px, " + img_translate_y + "px);'> <div id='target_text' style='color: red; font-size: " + handle_text_font_size + "px; transform: translate(" + text_translate_x + "px, " + text_translate_y + "px);'>" + target_value + "</div>";
+            console.log("updateHandle() called random target img_path:" + img_path);
+            handle_innerHTML = "<img id='target_image' src='" + img_path + "' width='150' style='transform: translate(" + img_translate_x + "px, " + img_translate_y + "px);'> <div id='target_text' style='color: red; font-size: " + handle_text_font_size + "px; transform: translate(" + text_translate_x + "px, " + text_translate_y + "px);'>" + target_id + "</div>";
             // console.log("updateHandle called, now the img_translate_x:" + img_translate_x);
             $('.ui-slider-handle')[0].innerHTML = handle_innerHTML;
         }
@@ -87,6 +93,12 @@
             text_translate_y = -img.clientHeight * 2 - handle_text_font_size - 10;
             // console.log("readImgSize called, now the img_translate_x:" + img_translate_x);
             updateHandle();
+        }
+        function targetImgPathToValue(img_path){
+            var path_splited = img_path.split(/_|\./);
+            var denominator = Number(path_splited[1]);
+            var numerator = Number(path_splited[2]);
+            return denominator / numerator;
         }
     </script>
 </head>
