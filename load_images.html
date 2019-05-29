@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>预加载</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/jqueryui/1.12.1/jquery-ui.min.css">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdn.staticfile.org/xlsx/0.14.3/xlsx.full.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- 七牛云CDN http://www.staticfile.org/ -->
+</head>
+
+<body>
+
+<div align="center">
+    <div style="height: 400px"> </div>
+    <button type="button" class="btn btn-info" onclick="location='https://neutrino3316.github.io/mathematical-evaluation/'" hidden=true>预加载已经完成，可以跳转啦</button>
+    <div style="height: 400px"> </div>
+    <div style="height: 400px"> </div>
+    <img src='http://www.daqianduan.com/wp-content/uploads/2015/10/maid.jpg'/>
+    <img src='http://www.daqianduan.com/wp-content/uploads/2015/10/maid.jpg'/>
+    <img src='http://www.daqianduan.com/wp-content/uploads/2015/10/maid.jpg'/>
+    <img src='http://www.daqianduan.com/wp-content/uploads/2015/10/maid.jpg'/>
+    <img src='http://www.daqianduan.com/wp-content/uploads/2015/10/maid.jpg'/>
+    <img src='http://www.daqianduan.com/wp-content/uploads/2015/10/maid.jpg'/>
+    <img src='http://www.daqianduan.com/wp-content/uploads/2015/10/maid.jpg'/>
+    <img src='http://www.daqianduan.com/wp-content/uploads/2015/10/maid.jpg'/>
+    <img src='http://www.daqianduan.com/wp-content/uploads/2015/10/maid.jpg'/>
+    <img src='http://www.daqianduan.com/wp-content/uploads/2015/10/maid.jpg'/>
+</div>
+
+</body>
+
+<script>
+    var target_image_list = ['frac_1_2.PNG', 'frac_1_4.PNG', 'frac_1_7.PNG', 'frac_1_19.PNG', 'frac_2_3.PNG', 'frac_3_8.PNG', 'frac_4_7.PNG', 'frac_5_6.PNG', 'frac_7_9.PNG', 'frac_12_13.PNG'];
+    var img_path = "";
+    var target_id = 0;
+    for (var target_id = 0; target_id < target_image_list.length; target_id++)
+    { 
+        img_path = "images/" + target_image_list[target_id];
+        $('img')[target_id].src = img_path;
+        console.log(img_path);
+    }
+    // loadNextImg();
+    // function loadNextImg(){
+    //     console.log(img_path);
+    //     img_path = "images/" + target_image_list[target_id];
+    //     $('img')[0].src = img_path;
+    //     if (target_id < target_image_list.length - 5) {
+    //         target_id++;
+    //         console.log(target_id);
+    //         $("img").on('load', finishedLoading());
+    //     }
+    // }
+    $("img").on('load', finishedLoading());
+    function finishedLoading(){
+        // alert('finished');
+        var image_list = $("img");
+        for (var image_id = 0; image_id < image_list.length; image_id++)
+        { 
+            image_list[image_id].hidden = true;
+        }
+        $("button")[0].hidden = false;
+        location = 'https://neutrino3316.github.io/mathematical-evaluation/';
+    }
+</script>
+
+</html>
