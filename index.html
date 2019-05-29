@@ -46,8 +46,9 @@
 
     <script>
         function nextTrail(){
-            var trail_data = {"trail":global_data.length+1, "target_value": target_value, "response": response.value, "result": Math.abs(response.value-target_value)};
+            var trail_data = {"trail":global_data.length+1, "target_value": target_value, "response": response.value, "result": Math.abs(response.value-target_value), "reaction_time(ms)":Date.now()-last_confirm_time};
             console.log("record data:" + JSON.stringify(trail_data));
+            last_confirm_time = Date.now();
             response.value = 0;
             $("#slider")[0].children[0].style = "0%" // reset slider to initial place
             global_data.push(trail_data);
@@ -139,6 +140,7 @@
     $("#response")[0].hidden = true;
     setTimeout("setRandomTarget();", 300);
     setTimeout("readImgSize();", 350);
+    setTimeout("var last_confirm_time = Date.now();", 400);
 </script>
 
 <style type="text/css">
