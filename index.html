@@ -47,7 +47,7 @@
 
     <script>
         function nextTrail(){
-            var trail_data = {"trail":global_data.length, "target": $('#target')[0].innerHTML, "result": amount.value};
+            var trail_data = {"trail":global_data.length, "target": target_value, "result": amount.value};
             console.log("record data:" + JSON.stringify(trail_data));
             amount.value = 0;
             $("#slider")[0].children[0].style = "0%" // reset slider to initial place
@@ -58,7 +58,7 @@
     </script>
 
     <script>
-        var random = 0;
+        var target_value = 0;
         var text_translate_x = 0;
         var text_translate_y = 0;
         var img_translate_x = 0;
@@ -69,13 +69,13 @@
         function setRandomTarget(){
             var min = 1;
             var max = 99;
-            random =  Math.floor(Math.random() * (max - min)) + min;
+            target_value =  Math.floor(Math.random() * (max - min)) + min;
             updateHandle();
-            $('#target_text')[0].innerHTML = random;
-            console.log("set random target:" + random);
+            $('#target_text')[0].innerHTML = target_value;
+            console.log("set random target:" + target_value);
         }
         function updateHandle(){
-            handle_innerHTML = "<img id='target_image' src='" + img_path + "' width='150' style='transform: translate(" + img_translate_x + "px, " + img_translate_y + "px);'> <div id='target_text' style='color: red; font-size: " + handle_text_font_size + "px; transform: translate(" + text_translate_x + "px, " + text_translate_y + "px);'>" + random + "</div>";
+            handle_innerHTML = "<img id='target_image' src='" + img_path + "' width='150' style='transform: translate(" + img_translate_x + "px, " + img_translate_y + "px);'> <div id='target_text' style='color: red; font-size: " + handle_text_font_size + "px; transform: translate(" + text_translate_x + "px, " + text_translate_y + "px);'>" + target_value + "</div>";
             // console.log("updateHandle called, now the img_translate_x:" + img_translate_x);
             $('.ui-slider-handle')[0].innerHTML = handle_innerHTML;
         }
