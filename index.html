@@ -87,10 +87,12 @@
         }
         function readImgSize(){
             var img = $("#target_image")[0];
-            img_translate_x = -img.clientWidth / 2;
-            img_translate_y = -img.clientHeight + 4;
+            var img_width = -img.clientWidth;
+            var img_height = -img.clientHeight;
+            img_translate_x = -img_width / 2;
+            img_translate_y = -img_height + 4;
             text_translate_x = -handle_text_font_size / 2;
-            text_translate_y = -img.clientHeight * 2 - handle_text_font_size - 10;
+            text_translate_y = -img_height * 2 - handle_text_font_size - 10;
             // console.log("readImgSize called, now the img_translate_x:" + img_translate_x);
             updateHandle();
         }
