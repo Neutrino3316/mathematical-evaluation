@@ -2,16 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>本地 - jQuery UI 滑块（Slider） - 对齐增量</title>
+    <title>分数滑块</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/jqueryui/1.12.1/jquery-ui.min.css">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.staticfile.org/jqueryui/1.12.1/jquery-ui.min.css">
     <script src="https://cdn.staticfile.org/xlsx/0.14.3/xlsx.full.min.js"></script>
-    <!-- https://www.jianshu.com/p/059a203e094d -->
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
     <!-- 七牛云CDN http://www.staticfile.org/ -->
-    <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async> </script>
     <script>
     $(function() {
         $("#slider").slider({
@@ -20,11 +19,11 @@
             max: 1,
             step: 0.001,
             slide: function(event, ui){
-                $("#amount").val(ui.value);
+                $("#response").val(ui.value);
                 updateHandle();
             }
         });
-        $("#amount").val(" " + $("#slider").slider("value") );
+        $("#response").val(" " + $("#slider").slider("value") );
     });
     </script>
 
@@ -47,9 +46,10 @@
 
     <script>
         function nextTrail(){
-            var trail_data = {"trail":global_data.length, "target": $('#target')[0].innerHTML, "result": amount.value};
+            var trail_data = {"trail":global_data.length+1, "target_value": target_value, "response": response.value, "result": Math.abs(response.value-target_value), "reaction_time(ms)":Date.now()-last_confirm_time};
             console.log("record data:" + JSON.stringify(trail_data));
-            amount.value = 0;
+            last_confirm_time = Date.now();
+            response.value = 0;
             $("#slider")[0].children[0].style = "0%" // reset slider to initial place
             global_data.push(trail_data);
             setRandomTarget();
@@ -58,29 +58,36 @@
     </script>
 
     <script>
-        var random = 0;
+        var target_image_list = ['frac_1_2.PNG', 'frac_1_4.PNG', 'frac_1_7.PNG', 'frac_1_19.PNG', 'frac_2_3.PNG', 'frac_3_8.PNG', 'frac_4_7.PNG', 'frac_5_6.PNG', 'frac_7_9.PNG', 'frac_12_13.PNG'];
+        var target_id = 0;
+        var img_path = "test_img.png";
+        var target_value = 0;
         var text_translate_x = 0;
         var text_translate_y = 0;
         var img_translate_x = 0;
         var img_translate_y = 0;
         var handle_text_font_size = 48;
         var handle_innerHTML = "";
-        var img_path = "test_img.png";
         function setRandomTarget(){
-            var min = 1;
-            var max = 99;
-            random =  Math.floor(Math.random() * (max - min)) + min;
+            var min = 0;
+            var max = 9;
+            target_id =  Math.floor(Math.random() * (max - min)) + min;
+            img_path = "images/" + target_image_list[target_id];
+            target_value = targetImgPathToValue(img_path);
             updateHandle();
-            $('#target')[0].innerHTML = random;
-            console.log("set random target:" + random);
+            $('#target_text')[0].innerHTML = target_id;
+            console.log("set random target id:" + target_id);
+            console.log("set random target img_path:" + img_path);
         }
         function updateHandle(){
-            handle_innerHTML = "<img id='frog' src='" + img_path + "' width='150' style='transform: translate(" + img_translate_x + "px, " + img_translate_y + "px);'> <div id='target' style='color: red; font-size: " + handle_text_font_size + "px; transform: translate(" + text_translate_x + "px, " + text_translate_y + "px);'>" + random + "</div>";
+            // console.log("updateHandle() called, random target img_path:" + img_path);
+            handle_innerHTML = "<img id='target_image' src='" + img_path + "' width='150' style='transform: translate(" + img_translate_x + "px, " + img_translate_y + "px);'> <div id='target_text' style='color: red; font-size: " + handle_text_font_size + "px; transform: translate(" + text_translate_x + "px, " + text_translate_y + "px);'>" + target_id + "</div>";
             // console.log("updateHandle called, now the img_translate_x:" + img_translate_x);
             $('.ui-slider-handle')[0].innerHTML = handle_innerHTML;
+            $("#target_text")[0].hidden = true;
         }
         function readImgSize(){
-            var img = $("#frog")[0];
+            var img = $("#target_image")[0];
             img_translate_x = -img.clientWidth / 2;
             img_translate_y = -img.clientHeight + 4;
             text_translate_x = -handle_text_font_size / 2;
@@ -88,21 +95,25 @@
             // console.log("readImgSize called, now the img_translate_x:" + img_translate_x);
             updateHandle();
         }
+        function targetImgPathToValue(img_path){
+            var path_splited = img_path.split(/_|\./);
+            var denominator = Number(path_splited[1]);
+            var numerator = Number(path_splited[2]);
+            return denominator / numerator;
+        }
     </script>
 </head>
 
 <body>
 
 <div align="center">
-    <p style="font-size: 50px">滑块任务</p>
-    <p style="line-height: 50px;font-size: 24px">在安静地方专心完成任务</p>
-    <p style="line-height: 50px;font-size: 24px">任务耗时约3分钟</p>
-    <div style="height: 20px">
-    </div>
-    <p style="line-height: 50px;font-size: 48px">请将滑块移到</p>
-    <!-- <div id="target" style="color: red; transform: translate(0px, 0px);">目标位置</div> -->
-    <span style="line-height: 50px;font-size: 48px">\(a \ne \frac{s}{a} \)</span>
-    <span id="amount" style="border: 0px; font-weight: bold; color: rgb(14, 10, 207); transform: translate(-82.5px, -175px);">被隐藏的当前数值</span>
+    <p style="font-size: 24px; color: transparent;">滑块任务</p>
+    <p style="line-height: 24px;font-size: 24px; color: transparent;">在安静地方专心完成任务</p>
+    <p style="line-height: 24px;font-size: 24px; color: transparent;">任务耗时约3分钟</p>
+    <p style="line-height: 24px;font-size: 24px; color: transparent;">请将滑块移到</p>
+    <!-- <div id="target_text" style="color: red; transform: translate(0px, 0px);">目标位置</div> -->
+    <span style="line-height: 24px;font-size: 24px; color: transparent;">\(a \ne \frac{s}{a} \)</span>
+    <span id="response" style="border: 0px; font-weight: bold; color: rgb(14, 10, 207); transform: translate(-82.5px, -175px);">被隐藏的当前数值</span>
 
     <div style="height: 200px">
     </div>
@@ -112,10 +123,11 @@
                 0&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;1
         </font>
     </p>
-    <div style="height: 400px"> </div>
+    <div style="height: 200px"> </div>
+    <button type="button" class="btn btn-info" onclick="nextTrail()">确认</button>
     <!-- https://www.runoob.com/bootstrap/bootstrap-v2-buttons.html -->
-    <button type="button" class="btn btn-success" onclick="exportToExcel()">下载</button>
-    <button type="button" class="btn btn-info" onclick="nextTrail()">下一个Trail</button>
+    <div style="height: 400px"> </div>
+    <button type="button" class="btn btn-success" onclick="exportToExcel()">下载数据</button>
     <button type="button" class="btn btn-info" onclick="setRandomTarget()">Random Target</button>
 </div>
 
@@ -125,9 +137,10 @@
 
 <script>
     $("button[onclick='setRandomTarget()']")[0].hidden = true;
-    $("#amount")[0].hidden = true;
+    $("#response")[0].hidden = true;
     setTimeout("setRandomTarget();", 300);
     setTimeout("readImgSize();", 350);
+    setTimeout("var last_confirm_time = Date.now();", 400);
 </script>
 
 <style type="text/css">
