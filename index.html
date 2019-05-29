@@ -64,7 +64,7 @@
         var img_translate_y = 0;
         var handle_text_font_size = 48;
         var handle_innerHTML = "";
-        var img_path = "https://img3.doubanio.com/img/files/file-1489464722.jpg";
+        var img_path = "test_img.png";
         function setRandomTarget(){
             var min = 1;
             var max = 99;
@@ -74,7 +74,7 @@
             console.log("set random target:" + random);
         }
         function updateHandle(){
-            handle_innerHTML = "<img id='frog' src='" + img_path + "' style='color: red; transform: translate(" + img_translate_x + "px, " + img_translate_y + "px);'> <div id='target' style='color: red; font-size: " + handle_text_font_size + "px; transform: translate(" + text_translate_x + "px, " + text_translate_y + "px);'>" + random + "</div>";
+            handle_innerHTML = "<img id='frog' src='" + img_path + "' width='200' style='transform: translate(" + img_translate_x + "px, " + img_translate_y + "px);'> <div id='target' style='color: red; font-size: " + handle_text_font_size + "px; transform: translate(" + text_translate_x + "px, " + text_translate_y + "px);'>" + random + "</div>";
             // console.log("updateHandle called, now the img_translate_x:" + img_translate_x);
             $('.ui-slider-handle')[0].innerHTML = handle_innerHTML;
         }
