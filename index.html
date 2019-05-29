@@ -19,11 +19,11 @@
             max: 1,
             step: 0.001,
             slide: function(event, ui){
-                $("#amount").val(ui.value);
+                $("#response").val(ui.value);
                 updateHandle();
             }
         });
-        $("#amount").val(" " + $("#slider").slider("value") );
+        $("#response").val(" " + $("#slider").slider("value") );
     });
     </script>
 
@@ -48,7 +48,7 @@
         function nextTrail(){
             var trail_data = {"trail":global_data.length, "target_value": target_value, "result": amount.value};
             console.log("record data:" + JSON.stringify(trail_data));
-            amount.value = 0;
+            response.value = 0;
             $("#slider")[0].children[0].style = "0%" // reset slider to initial place
             global_data.push(trail_data);
             setRandomTarget();
@@ -112,7 +112,7 @@
     <p style="line-height: 24px;font-size: 24px; color: transparent;">请将滑块移到</p>
     <!-- <div id="target_text" style="color: red; transform: translate(0px, 0px);">目标位置</div> -->
     <span style="line-height: 24px;font-size: 24px; color: transparent;">\(a \ne \frac{s}{a} \)</span>
-    <span id="amount" style="border: 0px; font-weight: bold; color: rgb(14, 10, 207); transform: translate(-82.5px, -175px);">被隐藏的当前数值</span>
+    <span id="response" style="border: 0px; font-weight: bold; color: rgb(14, 10, 207); transform: translate(-82.5px, -175px);">被隐藏的当前数值</span>
 
     <div style="height: 200px">
     </div>
@@ -136,7 +136,7 @@
 
 <script>
     $("button[onclick='setRandomTarget()']")[0].hidden = true;
-    $("#amount")[0].hidden = true;
+    $("#response")[0].hidden = true;
     setTimeout("setRandomTarget();", 300);
     setTimeout("readImgSize();", 350);
 </script>
