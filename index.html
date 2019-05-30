@@ -45,10 +45,13 @@
 
     <script>
         function nextTrail(){
-            var trail = global_data.length+1;
-            var trail_data = {"trail":trail, "target_value": target_value, "response": response.value, "result": Math.abs(response.value-target_value), "reaction_time(ms)":Date.now()-last_confirm_time};
+            var trail_num = global_data.length+1;
+            var trail_data = {"trail_num":trail_num, "target_value": target_value, "response": response.value, "result": Math.abs(response.value-target_value), "reaction_time(ms)":Date.now()-last_confirm_time};
             global_data.push(trail_data);
             console.log("record data:" + JSON.stringify(trail_data));
+            if (trail_num == 10) {
+                exportToExcel();
+            }
             last_confirm_time = Date.now();
             response.value = 0;
             $("#slider")[0].children[0].style = "0%" // reset slider to initial place
