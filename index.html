@@ -39,7 +39,23 @@
             var wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, "People");
             /* 生成xlsx文件 */
-            XLSX.writeFile(wb, "sheetjs.xlsx");
+            var filename = participant_id + "-" + participant_name + ".xlsx";
+            XLSX.writeFile(wb, filename);
+        }
+    </script>
+
+    <script>
+        var participant_id, participant_name, participant_hand, participant_gender;
+        function getInfo(){
+            participant_id = $("#participant_id").val();
+            participant_name = $("#participant_name").val();
+            participant_hand = $('input[name=participant_hand]:checked').val();
+            participant_gender = $('input[name=participant_gender]:checked').val();
+            console.log("participant_id:", participant_id);
+            console.log("participant_name:", participant_name);
+            console.log("participant_hand:", participant_hand);
+            console.log("participant_gender:", participant_gender);
+            $(".form-horizontal").remove();
         }
     </script>
 
@@ -113,6 +129,44 @@
 </head>
 
 <body>
+
+<form class="form-horizontal" role="form" style="width: 100%;padding: 0 25%">
+    <div class="form-group">
+        <p class="col-sm-3 control-label" style="line-height: 50px;padding-top: 0;font-size: 18px">被试编号:</p>
+        <div class="col-xs-8" style="height: 50px">
+            <input type="text" class="form-control label-input" id="participant_id" placeholder="请输入被试编号">
+        </div>
+    </div>
+    <div class="form-group">
+        <p class="col-sm-3 control-label" style="line-height: 50px;padding-top: 0;font-size: 18px">被试姓名:</p>
+        <div class="col-xs-8">
+            <input type="text" class="form-control label-input" id="participant_name" placeholder="请输被试姓名">
+        </div>
+    </div>
+    <div class="form-group">
+        <p class="col-sm-3 control-label" style="line-height: 50px;padding-top: 0;font-size: 18px">惯用手：</p>
+        <div class="col-xs-8" style="height: 50px; padding-top: 0px; padding-left: 30px">
+            <label class="radio-inline" style="height: 30px;font-size: 16px">
+                <input type="radio" name="participant_hand" value="left"> 左手
+            </label>
+            <label class="radio-inline" style="height: 30px;font-size: 16px">
+                <input type="radio" name="participant_hand" value="right"> 右手
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <p class="col-sm-3 control-label" style="line-height: 50px;padding-top: 0;font-size: 18px">性别：</p>
+        <div class="col-xs-8" style="height: 50px; padding-top: 0px; padding-left: 30px">
+            <label class="radio-inline" style="height: 30px;font-size: 16px">
+                <input type="radio" name="participant_gender" value="male"> 男
+            </label>
+            <label class="radio-inline" style="height: 30px;font-size: 16px">
+                <input type="radio" name="participant_gender" value="female"> 女
+            </label>
+        </div>
+    </div>
+    <button type="button" class="btn btn-info" onclick="getInfo()">确认信息已经正确填写</button>
+</form>
 
 <div align="center">
     <p style="font-size: 24px; color: transparent;">滑块任务</p>
