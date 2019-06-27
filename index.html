@@ -56,6 +56,7 @@
             console.log("participant_hand:", participant_hand);
             console.log("participant_gender:", participant_gender);
             $(".form-horizontal").remove();
+            $("#slider_div").hidden = false;
         }
     </script>
 
@@ -168,7 +169,7 @@
     <button type="button" class="btn btn-info" onclick="getInfo()">确认信息已经正确填写</button>
 </form>
 
-<div align="center">
+<div align="center" hidden="true" id="slider_div">
     <p style="font-size: 24px; color: transparent;">滑块任务</p>
     <p id="end_instruction" style="line-height:48px; font-size:48px; color:transparent;">感谢你的参与，实验结束！</p>
     <p style="line-height: 24px;font-size: 24px; color: transparent;">请将滑块移到</p>
