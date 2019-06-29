@@ -69,15 +69,15 @@
         function nextTrail(){
             var trail_num = global_data.length+1;
             var trail_data = {
-                "participant_id": participant_id,
-                "participant_name": participant_name,
-                "participant_hand": participant_hand,
-                "participant_gender": participant_gender,
+                "subject": participant_id,
+                "name": participant_name,
+                "handness": participant_hand,
+                "gender": participant_gender,
                 "trail_num": trail_num,
                 "target_value": target_value,
                 "response": response.value,
                 "result": Math.abs(response.value-target_value),
-                "reaction_time(ms)": Date.now()-last_confirm_time
+                "RT(ms)": Date.now()-last_confirm_time
             };
             global_data.push(trail_data);
             console.log("record data:" + JSON.stringify(trail_data));
