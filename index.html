@@ -126,7 +126,7 @@
         }
         function updateHandle(){
             // console.log("updateHandle() called, random target img_path:" + img_path);
-            handle_innerHTML = "<img id='target_image' src='" + img_path + "' width='150' style='transform: translate(" + img_translate_x + "px, " + img_translate_y + "px);'> <div id='target_text' style='color: red; font-size: " + handle_text_font_size + "px; transform: translate(" + text_translate_x + "px, " + text_translate_y + "px);'>" + target_id + "</div>";
+            handle_innerHTML = "<img id='target_image' src='" + img_path + "' style='transform: translate(" + img_translate_x + "px, " + img_translate_y + "px);'> <div id='target_text' style='color: red; font-size: " + handle_text_font_size + "px; transform: translate(" + text_translate_x + "px, " + text_translate_y + "px);'>" + target_id + "</div>";
             // console.log("updateHandle called, now the img_translate_x:" + img_translate_x);
             $('.ui-slider-handle')[0].innerHTML = handle_innerHTML;
             $("#target_text")[0].hidden = true;
