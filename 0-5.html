@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>分数滑块</title>
+    <!-- 七牛云CDN http://www.staticfile.org/ -->
+
+    <!-- <link rel="stylesheet" href="https://cdn.staticfile.org/jqueryui/1.12.1/jquery-ui.min.css">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdn.staticfile.org/xlsx/0.14.3/xlsx.full.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
+
+    <link rel="stylesheet" href="assets/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery-ui.min.js"></script>
+    <script src="assets/js/xlsx.full.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+
+    <script>
+    $(function() {
+        $("#slider").slider({
+            value:0,
+            min: 0,
+            max: 1,
+            step: 0.001,
+            slide: function(event, ui){
+                $("#response").val(ui.value);
+                updateHandle();
+            }
+        });
+        $("#response").val(" " + $("#slider").slider("value") );
+    });
+    </script>
+
+    <script>
+        'use strict';
+        var global_data = [];
+        function exportToExcel(){
+            // nextTrail();
+            /* 如果没有导入xlsx组件则导入 */
+            if(typeof XLSX == 'undefined') XLSX = require('xlsx');
+            /* 创建worksheet */
+            var ws = XLSX.utils.json_to_sheet(global_data);
+            /* 新建空workbook，然后加入worksheet */
+            var wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "People");
+            /* 生成xlsx文件 */
+            var filename = participant_id + "-" + participant_name + ".xlsx";
+            XLSX.writeFile(wb, filename);
+        }
+    </script>
+
+    <script>
+        var participant_id, participant_name, participant_hand, participant_gender;
+        var last_confirm_time;
+        function getInfo(){
+            participant_id = $("#participant_id").val();
+            participant_name = $("#participant_name").val();
+            participant_hand = $('input[name=participant_hand]:checked').val();
+            participant_gender = $('input[name=participant_gender]:checked').val();
+            console.log("participant_id:", participant_id);
+            console.log("participant_name:", participant_name);
+            console.log("participant_hand:", participant_hand);
+            console.log("participant_gender:", participant_gender);
+            $(".form-horizontal").remove();
+            $("#slider_div")[0].hidden = false;
+            var expected_loading_time = 50;
+            setTimeout("setRandomTarget();", expected_loading_time);
+            setTimeout("readImgSize();", expected_loading_time + 50);
+            setTimeout("last_confirm_time = Date.now();", expected_loading_time + 100);
+        }
+    </script>
+
+    <script>
+        function nextTrail(){
+            var trail_num = global_data.length+1;
+            var trail_data = {
+                "subject": participant_id,
+                "name": participant_name,
+                "handness": participant_hand,
+                "gender": participant_gender,
+                "trail_num": trail_num,
+                "target_value": target_value,
+                "response": response.value,
+                "PAE": Math.abs(response.value-target_value)/1,
+                "RT(ms)": Date.now()-last_confirm_time
+            };
+            global_data.push(trail_data);
+            console.log("record data:" + JSON.stringify(trail_data));
+            if (trail_num == 10) {
+                $("#end_instruction")[0].style.color = "black";
+                exportToExcel();
+            }
+            last_confirm_time = Date.now();
+            response.value = 0;
+            $("#slider")[0].children[0].style = "0%" // reset slider to initial place
+            setRandomTarget();
+            // return trail_data;
+        }
+    </script>
+
+    <script>
+        var target_image_list = [
+            'frac_2_17.png',
+            'frac_7_3.png',
+            'frac_9_14.png',
+            'frac_10_23.png',
+            'frac_11_8.png',
+            'frac_11_15.png',
+            'frac_12_7.png',
+            'frac_17_4.png',
+            'frac_17_6.png',
+            'frac_22_7.png',
+            'frac_22_15.png',
+            'frac_24_13.png',
+            'frac_27_12.png',
+            'frac_32_9.png',
+            'frac_37_8.png',
+            'frac_39_12.png',
+            'frac_48_19.png',
+            'frac_61_17.png',
+            'frac_73_15.png',
+            'frac_75_17.png'
+            ];
+        var target_id = 0;
+        var img_path = "test_img.png";
+        var target_value = 0;
+        var text_translate_x = 0;
+        var text_translate_y = 0;
+        var img_translate_x = 0;
+        var img_translate_y = 0;
+        var handle_text_font_size = 48;
+        var handle_innerHTML = "";
+        function setRandomTarget(){
+            var min = 0;
+            var max = 9;
+            target_id =  Math.floor(Math.random() * (max - min)) + min;
+            img_path = "images/" + target_image_list[target_id];
+            target_value = targetImgPathToValue(img_path);
+            updateHandle();
+            $('#target_text')[0].innerHTML = target_id;
+            console.log("set random target id:" + target_id);
+            console.log("set random target img_path:" + img_path);
+        }
+        function updateHandle(){
+            // console.log("updateHandle() called, random target img_path:" + img_path);
+            handle_innerHTML = "<img id='target_image' src='" + img_path + "' style='transform: translate(" + img_translate_x + "px, " + img_translate_y + "px);'> <div id='target_text' style='color: red; font-size: " + handle_text_font_size + "px; transform: translate(" + text_translate_x + "px, " + text_translate_y + "px);'>" + target_id + "</div>";
+            // console.log("updateHandle called, now the img_translate_x:" + img_translate_x);
+            $('.ui-slider-handle')[0].innerHTML = handle_innerHTML;
+            $("#target_text")[0].hidden = true;
+        }
+        function readImgSize(){
+            var img = $("#target_image")[0];
+            var img_width = img.clientWidth;
+            var img_height = img.clientHeight;
+            // var img_width = 150;
+            // var img_height = 300;
+            img_translate_x = -img_width / 2;
+            img_translate_y = -img_height + 4;
+            text_translate_x = -handle_text_font_size / 2;
+            text_translate_y = -img_height * 2 - handle_text_font_size - 10;
+            // console.log("readImgSize called, now the img_translate_x:" + img_translate_x);
+            updateHandle();
+        }
+        function targetImgPathToValue(img_path){
+            var path_splited = img_path.split(/_|\./);
+            var denominator = Number(path_splited[1]);
+            var numerator = Number(path_splited[2]);
+            return denominator / numerator;
+        }
+    </script>
+</head>
+
+<body>
+
+<form class="form-horizontal" role="form" style="width: 100%;padding: 0 25%">
+    <div class="form-group">
+        <p class="col-sm-3 control-label" style="line-height: 50px;padding-top: 0;font-size: 18px">被试编号:</p>
+        <div class="col-xs-8" style="height: 50px">
+            <input type="text" class="form-control label-input" id="participant_id" placeholder="请输入被试编号">
+        </div>
+    </div>
+    <div class="form-group">
+        <p class="col-sm-3 control-label" style="line-height: 50px;padding-top: 0;font-size: 18px">被试姓名:</p>
+        <div class="col-xs-8">
+            <input type="text" class="form-control label-input" id="participant_name" placeholder="请输被试姓名">
+        </div>
+    </div>
+    <div class="form-group">
+        <p class="col-sm-3 control-label" style="line-height: 50px;padding-top: 0;font-size: 18px">惯用手：</p>
+        <div class="col-xs-8" style="height: 50px; padding-top: 0px; padding-left: 30px">
+            <label class="radio-inline" style="height: 30px;font-size: 16px">
+                <input type="radio" name="participant_hand" value="left"> 左手
+            </label>
+            <label class="radio-inline" style="height: 30px;font-size: 16px">
+                <input type="radio" name="participant_hand" value="right"> 右手
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <p class="col-sm-3 control-label" style="line-height: 50px;padding-top: 0;font-size: 18px">性别：</p>
+        <div class="col-xs-8" style="height: 50px; padding-top: 0px; padding-left: 30px">
+            <label class="radio-inline" style="height: 30px;font-size: 16px">
+                <input type="radio" name="participant_gender" value="male"> 男
+            </label>
+            <label class="radio-inline" style="height: 30px;font-size: 16px">
+                <input type="radio" name="participant_gender" value="female"> 女
+            </label>
+        </div>
+    </div>
+    <button type="button" class="btn btn-info" onclick="getInfo()">确认信息已经正确填写</button>
+</form>
+
+<div align="center" hidden="true" id="slider_div">
+    <p style="font-size: 24px; color: transparent;">滑块任务</p>
+    <p id="end_instruction" style="line-height:48px; font-size:48px; color:transparent;">感谢你的参与，实验结束！</p>
+    <p style="line-height: 24px;font-size: 24px; color: transparent;">请将滑块移到</p>
+    <!-- <div id="target_text" style="color: red; transform: translate(0px, 0px);">目标位置</div> -->
+    <span style="line-height: 24px;font-size: 24px; color: transparent;">\(a \ne \frac{s}{a} \)</span>
+    <span id="response" style="border: 0px; font-weight: bold; color: rgb(14, 10, 207); transform: translate(-82.5px, -175px);">被隐藏的当前数值</span>
+
+    <div style="height: 365px"></div>
+    <div id="slider" style="width:948px; height: 20px;"></div>
+    <span>
+        <font size=32px face="Times">
+                0&nbsp;&nbsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;1
+        </font>
+    </span>
+    <div style="height: 100px"> </div>
+    <button type="button" class="btn btn-info" onclick="nextTrail()">确认</button>
+    <!-- https://www.runoob.com/bootstrap/bootstrap-v2-buttons.html -->
+    <div style="height: 400px"> </div>
+    <button type="button" class="btn btn-success" onclick="exportToExcel()">下载数据</button>
+    <button type="button" class="btn btn-info" onclick="setRandomTarget()">Random Target</button>
+</div>
+
+<div align="center" hidden="true" id="images_div">
+    <img src='images/frac_2_17.png'/>
+    <img src='images/frac_7_3.png'/>
+    <img src='images/frac_9_14.png'/>
+    <img src='images/frac_10_23.png'/>
+    <img src='images/frac_11_8.png'/>
+    <img src='images/frac_11_15.png'/>
+    <img src='images/frac_12_7.png'/>
+    <img src='images/frac_17_4.png'/>
+    <img src='images/frac_17_6.png'/>
+    <img src='images/frac_22_7.png'/>
+    <img src='images/frac_22_15.png'/>
+    <img src='images/frac_24_13.png'/>
+    <img src='images/frac_27_12.png'/>
+    <img src='images/frac_32_9.png'/>
+    <img src='images/frac_37_8.png'/>
+    <img src='images/frac_39_12.png'/>
+    <img src='images/frac_48_19.png'/>
+    <img src='images/frac_61_17.png'/>
+    <img src='images/frac_73_15.png'/>
+    <img src='images/frac_75_17.png'/>
+</div>
+
+</body>
+
+</html>
+
+<script>
+    $("button[onclick='setRandomTarget()']")[0].hidden = true;
+    $("#response")[0].hidden = true;
+</script>
+
+<style type="text/css">
+    .ui-slider .ui-slider-handle {
+        height: 20px;
+        width: 0px;
+        margin-left: 0px;
+        border: 0px solid rgba(0,0,0,1);
+    }
+    *:focus {
+        outline: none;
+    }
+    .ui-widget.ui-widget-content {
+        border-top-color: black;
+        border-bottom-color: white;
+        border-left-color: black;
+        border-right-color: black;
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+    }
+</style>
