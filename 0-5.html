@@ -24,7 +24,7 @@
         $("#slider").slider({
             value:0,
             min: 0,
-            max: 1,
+            max: 5,
             step: 0.001,
             slide: function(event, ui){
                 $("#response").val(ui.value);
@@ -85,7 +85,7 @@
                 "trail_num": trail_num,
                 "target_value": target_value,
                 "response": response.value,
-                "PAE": Math.abs(response.value-target_value)/1,
+                "PAE": Math.abs(response.value-target_value)/5,
                 "RT(ms)": Date.now()-last_confirm_time
             };
             global_data.push(trail_data);
@@ -226,7 +226,7 @@
     <div id="slider" style="width:948px; height: 20px;"></div>
     <span>
         <font size=32px face="Times">
-                0&nbsp;&nbsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;1
+                0&nbsp;&nbsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;5
         </font>
     </span>
     <div style="height: 100px"> </div>
