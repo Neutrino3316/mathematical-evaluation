@@ -92,6 +92,7 @@
             console.log("record data:" + JSON.stringify(trail_data));
             if (trail_num == 20) {
                 $("#end_instruction")[0].style.color = "black";
+                $("#slider_sub_div")[0].hidden = true;
                 exportToExcel();
             }
             last_confirm_time = Date.now();
@@ -217,21 +218,22 @@
 <div align="center" hidden="true" id="slider_div">
     <p style="font-size: 24px; color: transparent;">滑块任务</p>
     <p id="end_instruction" style="line-height:48px; font-size:48px; color:transparent;">感谢你的参与，实验结束！</p>
-    <p style="line-height: 24px;font-size: 24px; color: transparent;">请将滑块移到</p>
-    <!-- <div id="target_text" style="color: red; transform: translate(0px, 0px);">目标位置</div> -->
-    <span style="line-height: 24px;font-size: 24px; color: transparent;">\(a \ne \frac{s}{a} \)</span>
-    <span id="response" style="border: 0px; font-weight: bold; color: rgb(14, 10, 207); transform: translate(-82.5px, -175px);">被隐藏的当前数值</span>
-
-    <div style="height: 365px"></div>
-    <div id="slider" style="width:948px; height: 20px;"></div>
-    <span>
-        <font size=32px face="Times">
-                0&nbsp;&nbsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;1
-        </font>
-    </span>
-    <div style="height: 100px"> </div>
-    <button type="button" class="btn btn-info" onclick="nextTrail()">确认</button>
-    <!-- https://www.runoob.com/bootstrap/bootstrap-v2-buttons.html -->
+    <div align="center" id="slider_sub_div">
+        <p style="line-height: 24px;font-size: 24px; color: transparent;">请将滑块移到</p>
+        <!-- <div id="target_text" style="color: red; transform: translate(0px, 0px);">目标位置</div> -->
+        <span style="line-height: 24px;font-size: 24px; color: transparent;">\(a \ne \frac{s}{a} \)</span>
+        <span id="response" style="border: 0px; font-weight: bold; color: rgb(14, 10, 207); transform: translate(-82.5px, -175px);">被隐藏的当前数值</span>
+        <div style="height: 365px"></div>
+        <div id="slider" style="width:948px; height: 20px;"></div>
+        <span>
+            <font size=32px face="Times">
+                    0&nbsp;&nbsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;1
+            </font>
+        </span>
+        <div style="height: 100px"> </div>
+        <button type="button" class="btn btn-info" onclick="nextTrail()">确认</button>
+        <!-- https://www.runoob.com/bootstrap/bootstrap-v2-buttons.html -->
+    </div>
     <div style="height: 400px"> </div>
     <button type="button" class="btn btn-success" onclick="exportToExcel()">下载数据</button>
     <button type="button" class="btn btn-info" onclick="setRandomTarget()">Random Target</button>
