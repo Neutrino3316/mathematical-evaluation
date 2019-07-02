@@ -126,7 +126,6 @@
             'frac_73_15.png',
             'frac_75_17.png'
             ];
-        var target_id = 0;
         var img_path = "test_img.png";
         var target_value = 0;
         var text_translate_x = 0;
@@ -136,22 +135,23 @@
         var handle_text_font_size = 48;
         var handle_innerHTML = "";
         function setRandomTarget(){
-            var min = 0;
-            var max = 9;
-            target_id =  Math.floor(Math.random() * (max - min)) + min;
-            img_path = "images/" + target_image_list[target_id];
+            if (target_image_list.length == 0)
+            {
+                console.log("target_image_list is empty");
+                return;
+            }
+            target_image_list.sort(() => Math.random() - 0.5);  // shuffle
+            img_path = "images/" + target_image_list.pop();
             target_value = targetImgPathToValue(img_path);
             updateHandle();
-            $('#target_text')[0].innerHTML = target_id;
-            console.log("set random target id:" + target_id);
+            console.log("target_image_list.length:" + target_image_list.length);
             console.log("set random target img_path:" + img_path);
         }
         function updateHandle(){
             // console.log("updateHandle() called, random target img_path:" + img_path);
-            handle_innerHTML = "<img id='target_image' src='" + img_path + "' style='transform: translate(" + img_translate_x + "px, " + img_translate_y + "px);'> <div id='target_text' style='color: red; font-size: " + handle_text_font_size + "px; transform: translate(" + text_translate_x + "px, " + text_translate_y + "px);'>" + target_id + "</div>";
+            handle_innerHTML = "<img id='target_image' src='" + img_path + "' style='transform: translate(" + img_translate_x + "px, " + img_translate_y + "px);'>";
             // console.log("updateHandle called, now the img_translate_x:" + img_translate_x);
             $('.ui-slider-handle')[0].innerHTML = handle_innerHTML;
-            $("#target_text")[0].hidden = true;
         }
         function readImgSize(){
             var img = $("#target_image")[0];
@@ -220,7 +220,6 @@
     <p id="end_instruction" style="line-height:48px; font-size:48px; color:transparent;">感谢你的参与，实验结束！</p>
     <div align="center" id="slider_sub_div">
         <p style="line-height: 24px;font-size: 24px; color: transparent;">请将滑块移到</p>
-        <!-- <div id="target_text" style="color: red; transform: translate(0px, 0px);">目标位置</div> -->
         <span style="line-height: 24px;font-size: 24px; color: transparent;">\(a \ne \frac{s}{a} \)</span>
         <span id="response" style="border: 0px; font-weight: bold; color: rgb(14, 10, 207); transform: translate(-82.5px, -175px);">被隐藏的当前数值</span>
         <div style="height: 365px"></div>
